@@ -24,7 +24,7 @@ public class UserService implements Serializable {
     protected UserServicePK userServicePK;
 
     @NotNull(message = "Balance cannot be null")
-    private int balance;
+    private double balance;
 
     @NotNull(message = "User cannot be null")
     @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
@@ -61,16 +61,23 @@ public class UserService implements Serializable {
 
         UserService that = (UserService) o;
 
-        if (balance != that.balance) return false;
+        if (Double.compare(that.balance, balance) != 0) return false;
         if (userServicePK != null ? !userServicePK.equals(that.userServicePK) : that.userServicePK != null)
             return false;
+        if (user != null ? !user.equals(that.user) : that.user != null) return false;
+        if (service != null ? !service.equals(that.service) : that.service != null) return false;
         return status != null ? status.equals(that.status) : that.status == null;
     }
 
     @Override
     public int hashCode() {
-        int result = userServicePK != null ? userServicePK.hashCode() : 0;
-        result = 31 * result + balance;
+        int result;
+        long temp;
+        result = userServicePK != null ? userServicePK.hashCode() : 0;
+        temp = Double.doubleToLongBits(balance);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (user != null ? user.hashCode() : 0);
+        result = 31 * result + (service != null ? service.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
         return result;
     }

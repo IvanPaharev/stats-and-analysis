@@ -27,6 +27,12 @@ public class UserAnswer extends BaseEntity {
 
     @ManyToOne
     @JsonIgnore
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @NotNull(message = "User cannot be null")
+    private User user;
+
+    @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "question_id", referencedColumnName = "id")
     @NotNull(message = "Survey cannot be null")
     private Survey survey;
@@ -34,8 +40,9 @@ public class UserAnswer extends BaseEntity {
     public UserAnswer() {
     }
 
-    public UserAnswer(String userAnswer, Survey survey) {
+    public UserAnswer(String userAnswer, User user, Survey survey) {
         this.userAnswer = userAnswer;
+        this.user = user;
         this.survey = survey;
     }
 
@@ -47,6 +54,7 @@ public class UserAnswer extends BaseEntity {
         UserAnswer that = (UserAnswer) o;
 
         if (userAnswer != null ? !userAnswer.equals(that.userAnswer) : that.userAnswer != null) return false;
+        if (user != null ? !user.equals(that.user) : that.user != null) return false;
         return survey != null ? survey.equals(that.survey) : that.survey == null;
     }
 

@@ -21,21 +21,16 @@ import java.sql.Timestamp;
 public class UserServiceDetails extends BaseEntity {
     private static final long serialVersionUID = 4691733221686865377L;
 
-    @EmbeddedId
-    protected UserServicePK userServicePK;
-
-    @NotNull(message = "User cannot be null")
-    @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne
-    private User user;
-
+    @ManyToOne(optional = false)
     @NotNull(message = "Status cannot be null")
-    @JoinColumn(name = "service_id", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne
-    private Service service;
+    @JoinColumns({
+            @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
+            @JoinColumn(name = "service_id", referencedColumnName = "service_id")
+    })
+    private UserService userService;
 
     @NotNull(message = "Traffic type cannot be null")
-    @JoinColumn(name = "traffic_type_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "traffic_type_id", referencedColumnName = "id")
     @ManyToOne
     private TrafficType trafficType;
 
@@ -55,10 +50,8 @@ public class UserServiceDetails extends BaseEntity {
     public UserServiceDetails() {
     }
 
-    public UserServiceDetails(UserServicePK userServicePK, User user, Service service, TrafficType trafficType, Timestamp startDate, Timestamp endDate, double traffic) {
-        this.userServicePK = userServicePK;
-        this.user = user;
-        this.service = service;
+    public UserServiceDetails(UserService userService, User user, TrafficType trafficType, Timestamp startDate, Timestamp endDate, double traffic) {
+        this.userService = userService;
         this.trafficType = trafficType;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -73,10 +66,6 @@ public class UserServiceDetails extends BaseEntity {
         UserServiceDetails that = (UserServiceDetails) o;
 
         if (Double.compare(that.traffic, traffic) != 0) return false;
-        if (userServicePK != null ? !userServicePK.equals(that.userServicePK) : that.userServicePK != null)
-            return false;
-        if (user != null ? !user.equals(that.user) : that.user != null) return false;
-        if (service != null ? !service.equals(that.service) : that.service != null) return false;
         if (trafficType != null ? !trafficType.equals(that.trafficType) : that.trafficType != null) return false;
         if (startDate != null ? !startDate.equals(that.startDate) : that.startDate != null) return false;
         return endDate != null ? endDate.equals(that.endDate) : that.endDate == null;
@@ -86,10 +75,7 @@ public class UserServiceDetails extends BaseEntity {
     public int hashCode() {
         int result;
         long temp;
-        result = userServicePK != null ? userServicePK.hashCode() : 0;
-        result = 31 * result + (user != null ? user.hashCode() : 0);
-        result = 31 * result + (service != null ? service.hashCode() : 0);
-        result = 31 * result + (trafficType != null ? trafficType.hashCode() : 0);
+        result = trafficType != null ? trafficType.hashCode() : 0;
         result = 31 * result + (startDate != null ? startDate.hashCode() : 0);
         result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
         temp = Double.doubleToLongBits(traffic);
@@ -100,10 +86,7 @@ public class UserServiceDetails extends BaseEntity {
     @Override
     public String toString() {
         return "UserServiceDetails{" +
-                "userServicePK=" + userServicePK +
-                ", user=" + user +
-                ", service=" + service +
-                ", trafficType=" + trafficType +
+                "trafficType=" + trafficType +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", traffic=" + traffic +

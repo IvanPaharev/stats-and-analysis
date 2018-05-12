@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Dress Store</title>
+    <link href="resources/css/foo.css" rel="stylesheet">
+    <link href="resources/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="resources/css/font-awesome.min.css" rel="stylesheet">
+    <link href="resources/css/animate.min.css" rel="stylesheet">
+    <link href="resources/css/prettyPhoto.css" rel="stylesheet">
+    <link href="resources/css/responsive.css" rel="stylesheet">
+    <link href="resources/css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="resources/css/main.css" rel="stylesheet">
+    <link rel="shortcut icon" href="resources/images/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="resources/images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="resources/images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="resources/images/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="resources/images/ico/apple-touch-icon-57-precomposed.png">
+    <style type="text/css">
+        [ng\:cloak], [ng-cloak], .ng-cloak {
+            display: none !important;
+        }
+    </style>
+</head>
+<body class="homepage ng-cloak" ng-app="myApp">
+<header id="header">
+    <div class="top-bar">
+        <div class="container">
+            <div class="row">
+                <div ng-controller="currencyController as ctrl" class="col-sm-3 col-xs-3" ng-init="ctrl.fetchCurrencyInfo()">
+                    <span>{{$root.i18nMessages.currency}}</span>
+                    <select ng-model="$root.currentCurrency"
+                            ng-options="key for (key, value) in currencyInfo.rates">
+                    </select>
+                </div>
+                <div ng-controller="languageController as ctrl" class="col-sm-3 col-xs-3" ng-init="ctrl.fetchMessages()">
+                    <span>{{$root.i18nMessages.lang}}</span>
+                    <select ng-model="ctrl.currentLanguage"
+                            ng-options="item for item in ctrl.availableLanguages"
+                            ng-change="ctrl.fetchMessages()">
+                    </select>
+                </div>
+                <div class="col-sm-6 col-xs-6 social-header" ng-controller="loginController as ctrl">
+                    <ul class="reg-list" ng-init="ctrl.initAuthentication()">
+                        <li><a href="#/userBag"><i class="fa fa-shopping-cart"></i></a></li>
+                        <li ng-show="!authenticated"><a href="#/register"><!--ui-sref="register">-->{{$root.i18nMessages.register}}</a></li>
+                        <li ng-show="!authenticated"><a href="#/login"> <!--ui-sref="login">-->{{$root.i18nMessages.sign_in}}</a></li>
+                        <li ng-show="authenticated"><a href="#/userRoom">{{user.name}}</a></li>
+                        <li ng-show="authenticated && isAdmin"><a href="#/dressAdmin">{{$root.i18nMessages.admin_dress}}</a></li>
+                        <li ng-show="authenticated"><a href="#" ng-click="ctrl.logout()">{{$root.i18nMessages.logout}}</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-inverse" role="banner">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#/"><img src="resources/images/logo.png" alt="logo"></a>
+            </div>
+
+            <div class="collapse navbar-collapse navbar-right">
+                <ul class="nav navbar-nav">
+                    <li><a href="#/dresses/women"><!--ui-sref="dressList">-->{{$root.i18nMessages.type_women}}</a></li>
+                    <li><a href="#/dresses/men">{{$root.i18nMessages.type_men}}</a></li>
+                    <li><a href="#/dresses/girl">{{$root.i18nMessages.type_girl}}</a></li>
+                    <li><a href="#/dresses/boy">{{$root.i18nMessages.type_boy}}</a></li>
+                    <li><a href="#/dresses">{{$root.i18nMessages.type_all}}</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<div ng-view class="container"></div>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4 col-xs-4">
+                &copy; 2017 <a target="_blank" href="#/">Dress Store</a>. {{$root.i18nMessages.all_rights_reserved}}.
+            </div>
+            <div class="col-sm-4 col-xs-4">
+                <div class="social-header">
+                    <ul class="social-share">
+                        <li><a href="https://github.com/IvanPaharev/clothes-store"><i class="fa fa-github"></i></a>
+                            {{$root.i18nMessages.github}}</li>
+                        <li><a href="https://vk.com/id254693006"><i class="fa fa-vk"></i></a>{{$root.i18nMessages.vk}}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-4 col-xs-4">
+                <ul class="pull-right">
+                    <li><a href="#">{{$root.i18nMessages.home}}</a></li>
+                    <li><a href="#">{{$root.i18nMessages.about}}</a></li>
+                    <li><a href="#">{{$root.i18nMessages.contact}}</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="resources/js/angular-bootstrap.js"></script>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-cookies.js"></script>-->
+<script src="resources/js/ng-file-upload.js"></script>
+<script src="resources/js/angular/app.js"></script>
+<script src="resources/js/angular/service/dressService.js"></script>
+<script src="resources/js/angular/service/categoryService.js"></script>
+<script src="resources/js/angular/service/userService.js"></script>
+<script src="resources/js/angular/service/languageService.js"></script>
+<script src="resources/js/angular/service/typeService.js"></script>
+<script src="resources/js/angular/service/currencyService.js"></script>
+<script src="resources/js/angular/service/colorService.js"></script>
+<script src="resources/js/angular/service/sizeService.js"></script>
+<script src="resources/js/angular/service/roleService.js"></script>
+<script src="resources/js/angular/service/orderService.js"></script>
+<script src="resources/js/angular/service/statusService.js"></script>
+<script src="resources/js/angular/service/manufacturerService.js"></script>
+<script src="resources/js/angular/controller/dressListController.js"></script>
+<script src="resources/js/angular/controller/categoryController.js"></script>
+<script src="resources/js/angular/controller/loginController.js"></script>
+<script src="resources/js/angular/controller/languageController.js"></script>
+<script src="resources/js/angular/controller/userController.js"></script>
+<script src="resources/js/angular/controller/typeController.js"></script>
+<script src="resources/js/angular/controller/currencyController.js"></script>
+<script src="resources/js/angular/controller/colorController.js"></script>
+<script src="resources/js/angular/controller/sizeController.js"></script>
+<script src="resources/js/angular/controller/roleController.js"></script>
+<script src="resources/js/angular/controller/orderController.js"></script>
+<script src="resources/js/angular/controller/statusController.js"></script>
+<script src="resources/js/angular/controller/manufacturerController.js"></script>
+<script src="resources/js/jquery.js"></script>
+<script src="resources/js/bootstrap.min.js"></script>
+<script src="resources/js/jquery.prettyPhoto.js"></script>
+<script src="resources/js/jquery.isotope.min.js"></script>
+<script src="resources/js/main.js"></script>
+<script src="resources/js/wow.min.js"></script>
+<script src="resources/js/jquery.wmuSlider.js"></script>
+<script>
+    $('.example1').wmuSlider();
+</script>
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+function hideURLbar(){ window.scrollTo(0,1); }
+</script>
+<script src="resources/js/simpleCart.min.js"></script>
+<script>
+    new WOW().init();
+</script>
+<script src="resources/js/classie.js"></script>
+<script src="resources/js/uisearch.js"></script>
+</body>
+</html>

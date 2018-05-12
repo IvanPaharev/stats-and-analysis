@@ -1,0 +1,33 @@
+ul.reg-list li {
+    display: inline-block;
+}
+ul.reg-list li + li:before{
+    content: " | ";
+    padding: 0 10px;
+}
+.drop-box {
+    background: #F8F8F8;
+    border: 5px dashed #DDD;
+    width: 200px;
+    height: 65px;
+    text-align: center;
+    margin: 10px;
+}
+.dragover {
+    border: 5px dashed blue;
+}
+
+.checkboxdemoSelectAll .demo-legend {
+    color: #3F51B5; }
+
+.checkboxdemoSelectAll .demo-fieldset {
+    border-style: solid;
+    border-width: 1px;
+    height: 100%; }
+
+.checkboxdemoSelectAll .demo-select-all-checkboxes {
+    padding-left: 30px; }
+
+.page-button:focus {
+    background-color: burlywood;
+}

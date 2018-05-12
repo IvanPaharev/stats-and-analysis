@@ -20,7 +20,6 @@ import java.util.List;
 @Entity
 @Table(name = "role")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@ToString(callSuper = true)
 @Getter @Setter
 public class Role extends BaseEntity {
     private static final long serialVersionUID = 8101419755624978165L;
@@ -55,5 +54,12 @@ public class Role extends BaseEntity {
     @Override
     public int hashCode() {
         return role != null ? role.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "role='" + role + '\'' +
+                '}';
     }
 }

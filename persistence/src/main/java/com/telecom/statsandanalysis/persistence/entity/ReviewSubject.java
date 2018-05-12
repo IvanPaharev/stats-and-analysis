@@ -20,15 +20,14 @@ import java.util.List;
 @Entity
 @Table(name = "review_subject")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@ToString(callSuper = true)
 @Getter @Setter
 public class ReviewSubject extends BaseEntity {
     private static final long serialVersionUID = -5246029109268526986L;
 
     @Column(unique = true)
     @NotNull(message = "Review subject cannot be null")
-    @Size(max = 300, message = "Review subject max length - 300 symbols")
-    private String priority;
+    @Size(max = 300, message = "Review subject name max length - 300 symbols")
+    private String name;
 
     @NotNull(message = "Description cannot be null")
     @Size(max = 600, message = "Description max length - 600 symbols")
@@ -41,8 +40,8 @@ public class ReviewSubject extends BaseEntity {
     public ReviewSubject() {
     }
 
-    public ReviewSubject(String priority, String description) {
-        this.priority = priority;
+    public ReviewSubject(String name, String description) {
+        this.name = name;
         this.description = description;
     }
 
@@ -53,14 +52,22 @@ public class ReviewSubject extends BaseEntity {
 
         ReviewSubject that = (ReviewSubject) o;
 
-        if (priority != null ? !priority.equals(that.priority) : that.priority != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
         return description != null ? description.equals(that.description) : that.description == null;
     }
 
     @Override
     public int hashCode() {
-        int result = priority != null ? priority.hashCode() : 0;
+        int result = name != null ? name.hashCode() : 0;
         result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "ReviewSubject{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 }

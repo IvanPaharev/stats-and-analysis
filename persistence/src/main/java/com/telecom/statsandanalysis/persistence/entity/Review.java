@@ -13,7 +13,7 @@ import java.io.Serializable;
  * Created by A-one on 10.05.2018.
  */
 @Entity
-@Table(name = "user_service")
+@Table(name = "review")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter @Setter
 public class Review implements Serializable {
@@ -24,7 +24,7 @@ public class Review implements Serializable {
 
     @Size(max = 600, message = "Review max length - 600 symbols")
     @NotNull(message = "Review cannot be null")
-    private int review;
+    private String review;
 
     @NotNull(message = "User cannot be null")
     @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
@@ -49,7 +49,7 @@ public class Review implements Serializable {
     public Review() {
     }
 
-    public Review(ReviewPK reviewPK, int review, User user, ReviewSubject reviewSubject, Grade grade, Priority priority) {
+    public Review(ReviewPK reviewPK, String review, User user, ReviewSubject reviewSubject, Grade grade, Priority priority) {
         this.reviewPK = reviewPK;
         this.review = review;
         this.user = user;
@@ -77,7 +77,7 @@ public class Review implements Serializable {
     @Override
     public int hashCode() {
         int result = reviewPK != null ? reviewPK.hashCode() : 0;
-        result = 31 * result + review;
+        result = 31 * result + (review != null ? review.hashCode() : 0);
         result = 31 * result + (user != null ? user.hashCode() : 0);
         result = 31 * result + (reviewSubject != null ? reviewSubject.hashCode() : 0);
         result = 31 * result + (grade != null ? grade.hashCode() : 0);
@@ -93,7 +93,7 @@ public class Review implements Serializable {
                 ", user=" + user +
                 ", reviewSubject=" + reviewSubject +
                 ", grade=" + grade +
-                ", priority=" + priority +
+                ", name=" + priority +
                 '}';
     }
 }

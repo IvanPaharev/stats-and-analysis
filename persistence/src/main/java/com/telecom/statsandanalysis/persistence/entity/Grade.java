@@ -20,7 +20,6 @@ import java.util.List;
 @Entity
 @Table(name = "grade")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@ToString(callSuper = true)
 @Getter @Setter
 public class Grade extends BaseEntity {
     private static final long serialVersionUID = -6420402653080183918L;
@@ -61,5 +60,13 @@ public class Grade extends BaseEntity {
         int result = grade != null ? grade.hashCode() : 0;
         result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Grade{" +
+                "grade='" + grade + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 }

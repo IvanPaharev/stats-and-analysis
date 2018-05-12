@@ -23,7 +23,7 @@ public class Report extends BaseEntity {
 
     @Size(max = 1500, message = "Description max length - 1500 symbols")
     @NotNull(message = "Description cannot be null")
-    private int description;
+    private String description;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -43,7 +43,7 @@ public class Report extends BaseEntity {
     public Report() {
     }
 
-    public Report(int description, User user, ReportType reportType, Priority priority) {
+    public Report(String description, User user, ReportType reportType, Priority priority) {
         this.description = description;
         this.user = user;
         this.reportType = reportType;
@@ -57,7 +57,7 @@ public class Report extends BaseEntity {
 
         Report report = (Report) o;
 
-        if (description != report.description) return false;
+        if (description != null ? !description.equals(report.description) : report.description != null) return false;
         if (user != null ? !user.equals(report.user) : report.user != null) return false;
         if (reportType != null ? !reportType.equals(report.reportType) : report.reportType != null) return false;
         return priority != null ? priority.equals(report.priority) : report.priority == null;
@@ -65,7 +65,7 @@ public class Report extends BaseEntity {
 
     @Override
     public int hashCode() {
-        int result = description;
+        int result = description != null ? description.hashCode() : 0;
         result = 31 * result + (user != null ? user.hashCode() : 0);
         result = 31 * result + (reportType != null ? reportType.hashCode() : 0);
         result = 31 * result + (priority != null ? priority.hashCode() : 0);
@@ -78,7 +78,7 @@ public class Report extends BaseEntity {
                 "description=" + description +
                 ", user=" + user +
                 ", reportType=" + reportType +
-                ", priority=" + priority +
+                ", name=" + priority +
                 '}';
     }
 }

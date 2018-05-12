@@ -19,7 +19,6 @@ import java.util.List;
 @Table(name = "user")
 @EqualsAndHashCode(callSuper = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@ToString(callSuper = true)
 @Getter @Setter
 public class User extends BaseEntity {
     private static final long serialVersionUID = 4425799012842683419L;
@@ -79,5 +78,17 @@ public class User extends BaseEntity {
         this.lastname = lastname;
         this.phone = phone;
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", phone='" + phone + '\'' +
+                ", status=" + status +
+                '}';
     }
 }
